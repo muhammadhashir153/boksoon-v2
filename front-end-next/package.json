@@ -1,0 +1,23 @@
+{
+  "name": "front-end-next",
+  "version": "1.0.0",
+  "description": "Staged Next.js migration for Boksoon Kim Organization",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["nextjs", "laravel", "ngo"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^25.5.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "next": "^14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^6.0.2"
+  }
+}

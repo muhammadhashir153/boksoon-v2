@@ -1,0 +1,1854 @@
+{
+    "info":  {
+                 "name":  "NGO Laravel API",
+                 "_postman_id":  "c56b9d6c-5a38-4e9a-9db0-ngo-laravel-api",
+                 "description":  "Important: upload-capable update requests use POST with form-data. Do not use PATCH with multipart/form-data for blogs, books, donations, or profile updates because PHP does not reliably parse multipart PATCH requests.",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "value":  "http://127.0.0.1:8100"
+                     },
+                     {
+                         "key":  "accessToken",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "refreshToken",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "blogId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "commentToken",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "donationId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "ministryId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "userId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "roleId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "donorId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "transactionId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "testimonialId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "contactId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "newsletterId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "bookId",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "commentId",
+                         "value":  ""
+                     }
+                 ],
+    "item":  [
+                 {
+                     "name":  "Auth",
+                     "item":  [
+                                  {
+                                      "name":  "Health",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/health"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Login",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"email\": \"admin@example.com\",\n  \"pass\": \"secret123\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/auth/login"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Refresh",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"refresh_token\": \"{{refreshToken}}\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/auth/refresh"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Me",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/auth/me"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Profile",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "formdata",
+                                                                   "formdata":  [
+                                                                                    {
+                                                                                        "key":  "name",
+                                                                                        "value":  "Updated Admin",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "email",
+                                                                                        "value":  "admin@example.com",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "dp",
+                                                                                        "type":  "file",
+                                                                                        "src":  ""
+                                                                                    }
+                                                                                ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/auth/profile",
+                                                      "description":  "Use POST for multipart profile updates. PHP does not reliably parse multipart PATCH requests."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Password",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"current_pass\": \"secret123\",\n  \"new_pass\": \"secret45678\",\n  \"confirm_pass\": \"secret45678\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/auth/password"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Logout",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"refresh_token\": \"{{refreshToken}}\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/auth/logout"
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Public",
+                     "item":  [
+                                  {
+                                      "name":  "List Donations",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/donations"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Donation",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/donations/{{donationId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Ministries",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/ministries"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Ministry",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/ministries/{{ministryId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Blogs",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/blogs"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Blogs By Ministry",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/blogs?ministry_id={{ministryId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Blog",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/blogs/{{blogId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Blog By Slug",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/blogs/slug/example-slug"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Blog Comments",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/blogs/{{blogId}}/comments"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Submit Comment",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"blog_id\": \"{{blogId}}\",\n  \"name\": \"Reader\",\n  \"email\": \"reader@example.com\",\n  \"message\": \"Great article\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/comments"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Verify Comment",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/comments/verify/{{commentToken}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Submit Contact",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Visitor\",\n  \"email\": \"visitor@example.com\",\n  \"number\": \"+123456789\",\n  \"message\": \"Please contact me\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/contacts"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Subscribe Newsletter",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"email\": \"subscriber@example.com\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/newsletters"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Testimonials",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/testimonials"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Testimonials With Limit",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/testimonials?limit=3"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Books",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/books"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Book",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "url":  "{{baseUrl}}/api/v1/books/{{bookId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Public Transaction",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"donation_id\": \"{{donationId}}\",\n  \"amount\": 50,\n  \"name\": \"Public Donor\",\n  \"email\": \"donor@example.com\",\n  \"address\": \"123 Main Street\",\n  \"number\": \"555-0100\",\n  \"status\": \"completed\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/transactions"
+                                                  }
+                                  }
+                              ]
+                 },
+                 {
+                     "name":  "Admin",
+                     "item":  [
+                                  {
+                                      "name":  "List Users",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/users"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create User",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Editor User\",\n  \"email\": \"editor@example.com\",\n  \"password\": \"secret123\",\n  \"role_id\": \"{{roleId}}\",\n  \"ministry_id\": \"{{ministryId}}\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/users"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get User",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/users/{{userId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update User Password",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"password\": \"secret45678\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/users/{{userId}}/password"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Roles",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/roles"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Ministries",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/ministries"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Donors",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donors"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Transactions",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/transactions"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Transaction",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"donation_id\": \"{{donationId}}\",\n  \"amount\": 125.50,\n  \"payment_method\": \"card\",\n  \"status\": \"completed\",\n  \"email\": \"donor@example.com\",\n  \"name\": \"Test Donor\",\n  \"address\": \"123 Street\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/transactions"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Testimonials",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/testimonials"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Donations",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donations"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Donation",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "formdata",
+                                                                   "formdata":  [
+                                                                                    {
+                                                                                        "key":  "title",
+                                                                                        "value":  "Campaign",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "description",
+                                                                                        "value":  "Campaign description",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "target_amount",
+                                                                                        "value":  "5000",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "start_date",
+                                                                                        "value":  "2026-04-02",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "end_date",
+                                                                                        "value":  "2026-12-31",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "placeholder",
+                                                                                        "type":  "file",
+                                                                                        "src":  ""
+                                                                                    }
+                                                                                ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donations"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Blogs",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/blogs"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Blog",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "formdata",
+                                                                   "formdata":  [
+                                                                                    {
+                                                                                        "key":  "title",
+                                                                                        "value":  "My New Blog",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "content",
+                                                                                        "value":  "\u003cp\u003eHello world\u003c/p\u003e",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "ministry_id",
+                                                                                        "value":  "{{ministryId}}",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "is_published",
+                                                                                        "value":  "1",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "banner_image",
+                                                                                        "type":  "file",
+                                                                                        "src":  ""
+                                                                                    }
+                                                                                ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/blogs"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Contacts",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/contacts"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Newsletters",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/newsletters"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Upload Blog Editor Image",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "formdata",
+                                                                   "formdata":  [
+                                                                                    {
+                                                                                        "key":  "upload",
+                                                                                        "type":  "file",
+                                                                                        "src":  ""
+                                                                                    }
+                                                                                ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/blogs/upload-image"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Books",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/books"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Book",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "formdata",
+                                                                   "formdata":  [
+                                                                                    {
+                                                                                        "key":  "title",
+                                                                                        "value":  "Modern Missions",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "description",
+                                                                                        "value":  "A new staged book",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "link_url",
+                                                                                        "value":  "https://example.com/books/modern-missions",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "link_label",
+                                                                                        "value":  "Buy now",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "language",
+                                                                                        "value":  "English",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "author_name",
+                                                                                        "value":  "Boksoon Kim",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "sort_order",
+                                                                                        "value":  "0",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "is_published",
+                                                                                        "value":  "1",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "cover_image",
+                                                                                        "type":  "file",
+                                                                                        "src":  ""
+                                                                                    }
+                                                                                ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/books"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Role",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/roles/{{roleId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Role",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"manager\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/roles/{{roleId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Role",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/roles/{{roleId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Ministry",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Publishing\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/ministries"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Ministry",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/ministries/{{ministryId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Ministry",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Outreach\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/ministries/{{ministryId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Ministry",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/ministries/{{ministryId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update User",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"Updated User\",\n  \"email\": \"updated.user@example.com\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/users/{{userId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete User",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/users/{{userId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Donor",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"John Donor\",\n  \"email\": \"john.donor@example.com\",\n  \"phone_number\": \"555-0100\",\n  \"address\": \"123 Main Street\",\n  \"is_hidden\": false\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donors"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Donor",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donors/{{donorId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Donor",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"name\": \"John Updated Donor\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donors/{{donorId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Donor",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donors/{{donorId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Transaction",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/transactions/{{transactionId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Transaction",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"status\": \"completed\",\n  \"amount\": 75\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/transactions/{{transactionId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Transaction",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/transactions/{{transactionId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Testimonial",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/testimonials/{{testimonialId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Create Testimonial",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"reviewer_name\": \"Sarah\",\n  \"review\": \"Wonderful work\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/testimonials"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Testimonial",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\n  \"reviewer_name\": \"Sarah\",\n  \"review\": \"Updated testimonial\"\n}"
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/testimonials/{{testimonialId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Testimonial",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/testimonials/{{testimonialId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Donation",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donations/{{donationId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Donation",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "formdata",
+                                                                   "formdata":  [
+                                                                                    {
+                                                                                        "key":  "title",
+                                                                                        "value":  "Updated Donation",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "description",
+                                                                                        "value":  "Updated campaign copy",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "target_amount",
+                                                                                        "value":  "5000",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "placeholder",
+                                                                                        "type":  "file",
+                                                                                        "src":  ""
+                                                                                    }
+                                                                                ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donations/{{donationId}}",
+                                                      "description":  "Use POST for multipart donation updates. PHP does not reliably parse multipart PATCH requests."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Donation",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/donations/{{donationId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Blog",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/blogs/{{blogId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Blog",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "formdata",
+                                                                   "formdata":  [
+                                                                                    {
+                                                                                        "key":  "title",
+                                                                                        "value":  "Updated Blog Title",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "content",
+                                                                                        "value":  "\u003cp\u003eUpdated content\u003c/p\u003e",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "ministry_id",
+                                                                                        "value":  "{{ministryId}}",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "is_published",
+                                                                                        "value":  "1",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "banner_image",
+                                                                                        "type":  "file",
+                                                                                        "src":  ""
+                                                                                    }
+                                                                                ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/blogs/{{blogId}}",
+                                                      "description":  "Use POST for multipart blog updates. PHP does not reliably parse multipart PATCH requests."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Blog",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/blogs/{{blogId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Contact",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/contacts/{{contactId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Newsletter",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/newsletters/{{newsletterId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Get Book",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/books/{{bookId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Update Book",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "body":  {
+                                                                   "mode":  "formdata",
+                                                                   "formdata":  [
+                                                                                    {
+                                                                                        "key":  "title",
+                                                                                        "value":  "Updated Book Title",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "description",
+                                                                                        "value":  "Updated description",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "link_url",
+                                                                                        "value":  "https://example.com/books/updated-book",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "link_label",
+                                                                                        "value":  "Read now",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "language",
+                                                                                        "value":  "English",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "author_name",
+                                                                                        "value":  "Boksoon Kim",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "sort_order",
+                                                                                        "value":  "1",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "is_published",
+                                                                                        "value":  "1",
+                                                                                        "type":  "text"
+                                                                                    },
+                                                                                    {
+                                                                                        "key":  "cover_image",
+                                                                                        "type":  "file",
+                                                                                        "src":  ""
+                                                                                    }
+                                                                                ]
+                                                               },
+                                                      "url":  "{{baseUrl}}/api/v1/admin/books/{{bookId}}",
+                                                      "description":  "Use POST for multipart book updates. PHP does not reliably parse multipart PATCH requests."
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Delete Book",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  "{{baseUrl}}/api/v1/admin/books/{{bookId}}"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "List Blog Trash",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}"
+                                                                     }
+                                                                 ],
+                                                      "url":  [
+                                                                  "{{baseUrl}}/api/v1/admin/blogs/trash",
+                                                                  "New-RequestItem"
+                                                              ],
+                                                      "description":  "Restore Blog"
+                                                  }
+                                  },
+                                  {
+                                      "name":  "Restore Blog",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/blogs/{{blogId}}/restore",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "blogs",
+                                                                               "{{blogId}}",
+                                                                               "restore"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Purge Blog",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/blogs/{{blogId}}/purge",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "blogs",
+                                                                               "{{blogId}}",
+                                                                               "purge"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "List Book Trash",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/books/trash",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "books",
+                                                                               "trash"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Restore Book",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/books/{{bookId}}/restore",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "books",
+                                                                               "{{bookId}}",
+                                                                               "restore"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Purge Book",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/books/{{bookId}}/purge",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "books",
+                                                                               "{{bookId}}",
+                                                                               "purge"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "List Donation Trash",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/donations/trash",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "donations",
+                                                                               "trash"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Restore Donation",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/donations/{{donationId}}/restore",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "donations",
+                                                                               "{{donationId}}",
+                                                                               "restore"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Purge Donation",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/donations/{{donationId}}/purge",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "donations",
+                                                                               "{{donationId}}",
+                                                                               "purge"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "List Transaction Trash",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/transactions/trash",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "transactions",
+                                                                               "trash"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Restore Transaction",
+                                      "request":  {
+                                                      "method":  "POST",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/transactions/{{transactionId}}/restore",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "transactions",
+                                                                               "{{transactionId}}",
+                                                                               "restore"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Purge Transaction",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/transactions/{{transactionId}}/purge",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "transactions",
+                                                                               "{{transactionId}}",
+                                                                               "purge"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "List Comments",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/comments",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "comments"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Get Comment",
+                                      "request":  {
+                                                      "method":  "GET",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/comments/{{commentId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "comments",
+                                                                               "{{commentId}}"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Update Comment Publish Status",
+                                      "request":  {
+                                                      "method":  "PATCH",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     },
+                                                                     {
+                                                                         "key":  "Content-Type",
+                                                                         "value":  "application/json",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/comments/{{commentId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "comments",
+                                                                               "{{commentId}}"
+                                                                           ]
+                                                              },
+                                                      "description":  "",
+                                                      "body":  {
+                                                                   "mode":  "raw",
+                                                                   "raw":  "{\r\n    \"is_published\":  true\r\n}",
+                                                                   "options":  {
+                                                                                   "raw":  {
+                                                                                               "language":  "json"
+                                                                                           }
+                                                                               }
+                                                               }
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  },
+                                  {
+                                      "name":  "Delete Comment",
+                                      "request":  {
+                                                      "method":  "DELETE",
+                                                      "header":  [
+                                                                     {
+                                                                         "key":  "Authorization",
+                                                                         "value":  "Bearer {{accessToken}}",
+                                                                         "type":  "text"
+                                                                     }
+                                                                 ],
+                                                      "url":  {
+                                                                  "raw":  "{{baseUrl}}/api/v1/admin/comments/{{commentId}}",
+                                                                  "host":  [
+                                                                               "{{baseUrl}}"
+                                                                           ],
+                                                                  "path":  [
+                                                                               "api",
+                                                                               "v1",
+                                                                               "admin",
+                                                                               "comments",
+                                                                               "{{commentId}}"
+                                                                           ]
+                                                              },
+                                                      "description":  ""
+                                                  },
+                                      "response":  [
+
+                                                   ]
+                                  }
+                              ]
+                 }
+             ]
+}
