@@ -139,8 +139,8 @@ export async function proxyLaravelRequest(
   options: { requireAuth?: boolean } = {}
 ) {
   const cookieStore = cookies();
-  let accessToken = request.cookies.get(ACCESS_COOKIE)?.value || cookieStore.get(ACCESS_COOKIE)?.value;
-  const refreshToken = request.cookies.get(REFRESH_COOKIE)?.value || cookieStore.get(REFRESH_COOKIE)?.value;
+  let accessToken = request.cookies.get(ACCESS_COOKIE)?.value || (await cookieStore).get(ACCESS_COOKIE)?.value;
+  const refreshToken = request.cookies.get(REFRESH_COOKIE)?.value || (await cookieStore).get(REFRESH_COOKIE)?.value;
 
   let response = await doProxy(request, laravelPath, accessToken);
 
@@ -189,8 +189,8 @@ export async function fetchPublicResource<T>(path: string) {
 
 export async function fetchProtectedResource<T>(path: string) {
   const cookieStore = cookies();
-  let accessToken = cookieStore.get(ACCESS_COOKIE)?.value;
-  const refreshToken = cookieStore.get(REFRESH_COOKIE)?.value;
+  let accessToken = (await cookieStore).get(ACCESS_COOKIE)?.value;
+  const refreshToken = (await cookieStore).get(REFRESH_COOKIE)?.value;
 
   // If access token is missing but refresh token is still valid, try to continue this request.
   if (!accessToken && refreshToken) {
